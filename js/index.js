@@ -1,41 +1,16 @@
-document.querySelector("#input").onchange = function () {
-  document.querySelector("#acceptable").textContent = StringChallenge(
-    this.value
-  )
-    ? "true"
-    : "false";
-  document.querySelector("pre>code").textContent = JSON.stringify(
-    SimplePasswordChecker(this.value),
-    null,
-    2
-  );
-};
+const validation = document.getElementById("validation");
+const input = document.getElementById("input");
 const StringChallenge = (str) => {
-  let charCheck = str.length > 7 && str.length < 31;
-  let capitalCheck = /[A-Z]/g.test(str);
-  let numberCheck = /[0-9]/g.test(str);
-  let passwordCheck = !/password/gi.test(str);
-  let punctuationCheck = /[.?!:,;]/g.test(str);
-  return (
-    charCheck &&
-    punctuationCheck &&
-    capitalCheck &&
-    numberCheck &&
-    passwordCheck
-  );
+  if (
+    str.length > 7 &&
+    str.length < 31 &&
+    /[A-Z]/g.test(str) &&
+    /[0-9]/g.test(str) &&
+    /[.?!:,;]/g.test(str)
+  ) {
+    validation.innerText = "Its Ok";
+  } else {
+    validation.innerText = "all checks failed";
+  }
+  return true;
 };
-
-function SimplePasswordChecker(str) {
-  let charCheck = str.length > 7 && str.length < 31;
-  let capitalCheck = /[A-Z]/g.test(str);
-  let numberCheck = /[0-9]/g.test(str);
-  let passwordCheck = !/password/gi.test(str);
-  let punctuationCheck = /[.?!:,;]/g.test(str);
-  return {
-    charCheck,
-    punctuationCheck,
-    capitalCheck,
-    numberCheck,
-    passwordCheck,
-  };
-}
